@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.login.mapper.UserMapper">
+    <!--    查询所有用户-->
+    <select id="userList" resultType="com.example.login.bean.User">
+        select * from admin_user
+    </select>
+    <!--    添加用户-->
+    <insert id="save" parameterType="string">
+        INSERT INTO admin_user VALUES(null,#{username},#{password})
+    </insert>
+    <!--    删除用户-->
+    <delete id="delete" parameterType="int">
+        delete from admin_user where id = #{id}
+    </delete>
+    <!--    根据id查询用户-->
+    <select id="findUserById" resultType="com.example.shixun2.bean.User">
+        select * from admin_user where id = #{id}
+    </select>
+    <!--    更改用户信息-->
+    <update id="update" parameterType="user">
+        update admin_user set username=#{username},password=#{password} where id = #{id}
+    </update>
+
+</mapper>

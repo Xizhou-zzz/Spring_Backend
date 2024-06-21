@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bike_share?serverTimezone=UTC
+    username: root
+    password: 124356tbw
+    initial-size: 10
+    max-active: 20
+    max-idle: 8
+    min-idle: 8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: user-service #此springboot模块提供普通用户增删改查微服务
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+
+
+resources:
+  static-locations: classpath:static/
+
+thymeleaf:
+  prefix: classpath:/templates/
+  suffix: .html
+  mode: HTML5
+  encoding: UTF-8
+  content-type: text/html
+  cache: false
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.example.user.bean
+logging:
+  level:
+    com:
+      example:
+        mapper: debug
+server:
+  port: 8504 #应用启动的端口，也是要注册的端口

@@ -1,0 +1,23 @@
+server:
+  port: 8500
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: nacos-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        - id: login-service-route
+          uri: http://localhost:8502
+          predicates:
+            - Path=/login-service/**
+          filters:
+            - StripPrefix=1
