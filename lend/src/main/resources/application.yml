@@ -9,7 +9,7 @@ spring:
     min-idle: 8
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
-    name: user-service #此springboot模块提供普通用户增删改查微服务
+    name: lend-service #此springboot模块提供普通用户增删改查微服务
   cloud:
     nacos:
       discovery:
@@ -28,7 +28,7 @@ thymeleaf:
 
 mybatis:
   mapper-locations: classpath:mapping/*.xml
-  type-aliases-package: com.example.user.bean
+  type-aliases-package: com.example.lend.bean
 logging:
   level:
     com:

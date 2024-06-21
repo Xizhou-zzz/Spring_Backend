@@ -19,16 +19,28 @@ public class UserController {
     //注入UserService
     private UserService userService;
 
+    //微服务:获取所有用户数据
+    @RequestMapping(method = RequestMethod.GET)
+    @Operation(summary = "获取所有用户信息")
+    public ResponseEntity<?> getAllUsers(){
+        // 获取所有用户数据
+        List<User> users = userService.userList();
+        // 检查是否有用户数据
+        if (!users.isEmpty()) {
+            // 如果存在用户数据，则返回所有用户信息
+            return ResponseEntity.ok().body(users);
+        } else {
+            // 如果没有用户数据，则返回空列表
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("没有找到任何用户！");
+        }
+    }
+
     //微服务:增加一条用户数据
     @RequestMapping(method = RequestMethod.POST)
     @Operation(summary = "添加用户信息")
     public ResponseEntity<?> addUser(@RequestBody User user){
         //后端拿到前端发送来的新的用户名和密码数据
         String username = user.getUsername();
-        String password = user.getPassword();
-        int age = user.getAge();
-        String sex = user.getSex();
-        String address = user.getAddress();
         //获取当前的用户的用户名和密码信息
         List<User> users = userService.userList();
         //遍历用户列表，检查用户名和密码是否匹配
@@ -38,13 +50,7 @@ public class UserController {
                 return ResponseEntity.ok().body("{\"message\": \"用户名已存在，插入失败\"}");
             }
         }
-        //构建新的用户对象
-        User newUser = new User();
-        newUser.setUsername(username);
-        newUser.setPassword(password);
-        newUser.setAge(age);
-        newUser.setSex(sex);
-        newUser.setAddress(address);
+
 
         //把新的用户信息保存到数据库中
         userService.save(user);
