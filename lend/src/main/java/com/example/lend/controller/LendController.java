@@ -19,6 +19,22 @@ public class LendController {
     //注入LendService
     private LendService lendService;
 
+    //微服务:获取所有维修数据
+    @RequestMapping(method = RequestMethod.GET)
+    @Operation(summary = "获取所有用户信息")
+    public ResponseEntity<?> getAllLends(){
+        // 获取所有用户数据
+        List<Lend> lends = lendService.lendList();
+        // 检查是否有用户数据
+        if (!lends.isEmpty()) {
+            // 如果存在用户数据，则返回所有用户信息
+            return ResponseEntity.ok().body(lends);
+        } else {
+            // 如果没有用户数据，则返回空列表
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("没有找到任何租借信息！");
+        }
+    }
+
     //微服务:增加一条lend数据
     @RequestMapping(method = RequestMethod.POST)
     @Operation(summary = "添加租借信息")
