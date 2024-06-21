@@ -31,7 +31,7 @@ thymeleaf:
 
 mybatis:
   mapper-locations: classpath:mapping/*.xml
-  type-aliases-package: com.example.shixun2.bean
+  type-aliases-package: com.example.login.bean
 logging:
   level:
     com:

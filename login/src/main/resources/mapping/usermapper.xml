@@ -14,7 +14,7 @@
         delete from admin_user where id = #{id}
     </delete>
     <!--    根据id查询用户-->
-    <select id="findUserById" resultType="com.example.shixun2.bean.User">
+    <select id="findUserById" resultType="com.example.login.bean.User">
         select * from admin_user where id = #{id}
     </select>
     <!--    更改用户信息-->
