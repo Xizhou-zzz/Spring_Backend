@@ -3,9 +3,19 @@ package com.example.lend.bean;
 import java.time.LocalDateTime;
 
 public class Lend {
+    private int id;
     private int user_id;
     private int bike_id;
     private LocalDateTime lend_time;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private LocalDateTime return_time;
 
     public int getUser_id() {

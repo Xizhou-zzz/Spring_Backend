@@ -3,8 +3,18 @@ package com.example.consumer.bean;
 import java.time.LocalDateTime;
 
 public class Lend {
+    private int id;
     private int user_id;
     private int bike_id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private LocalDateTime lend_time;
     private LocalDateTime return_time;
 
