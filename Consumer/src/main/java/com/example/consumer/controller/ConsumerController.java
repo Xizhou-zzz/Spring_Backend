@@ -1,5 +1,8 @@
 package com.example.consumer.controller;
 
+import com.example.consumer.bean.Bike;
+import com.example.consumer.bean.Lend;
+import com.example.consumer.bean.Repair;
 import com.example.consumer.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -23,22 +26,6 @@ public class ConsumerController {
         this.restTemplate = restTemplate;
         this.discoveryClient = discoveryClient;
     }
-
-    //调用测试微服务
-//    @RequestMapping(value = "/echo/{str}", method = RequestMethod.GET)
-//    public String echo(@PathVariable String str) {
-//        // 获取服务提供者的实例列表
-//        List<ServiceInstance> instances = discoveryClient.getInstances("login-service");
-//        if (instances.isEmpty()) {
-//            return "No instances available for service-provider";
-//        }
-//        // 获取第一个实例的URL,serviceUrl的值为http://172.22.144.1:8070
-//        String serviceUrl = instances.get(0).getUri().toString();
-//        // 构造请求URL
-//        String url = serviceUrl + "/users/echo/" + str;
-//        // 使用RestTemplate访问服务提供者
-//        return restTemplate.getForObject(url, String.class);
-//    }
 
     //调用用户登录微服务
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -136,7 +123,220 @@ public class ConsumerController {
         restTemplate.put(url, user);
         return ResponseEntity.ok().body("更新成功！");
     }
+
     /*调用单车相关微服务*/
+    // 获取全部单车信息
+    @RequestMapping(value = "/bike", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllBikes() {
+        List<ServiceInstance> instances = discoveryClient.getInstances("bike-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for bike-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/";
+        ResponseEntity<List<Bike>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Bike>>() {}
+        );
+        System.out.println(response);
+        return ResponseEntity.ok().body(response.getBody());
+    }
+
+    // 添加单车
+    @RequestMapping(value = "/bike", method = RequestMethod.POST)
+    public ResponseEntity<?> addBike(@RequestBody Bike bike) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("bike-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for bike-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/";
+        ResponseEntity<String> response = restTemplate.postForEntity(url, bike, String.class);
+        return ResponseEntity.ok().body(response.getBody());
+    }
+
+    // 删除单车
+    @RequestMapping(value = "/bike/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteBike(@PathVariable Integer id) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("bike-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for bike-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/" + id;
+        restTemplate.delete(url);
+        return ResponseEntity.ok().body("删除成功！");
+    }
+
+    // 查询单车
+    @RequestMapping(value = "/bike/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getBikeById(@PathVariable int id) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("bike-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for bike-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/" + id;
+        ResponseEntity<Bike> response = restTemplate.getForEntity(url, Bike.class);
+        return ResponseEntity.ok().body(response.getBody());
+    }
+
+    // 修改单车
+    @RequestMapping(value = "/bike/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateBike(@RequestBody Bike bike, @PathVariable int id) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("bike-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for bike-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/" + id;
+        restTemplate.put(url, bike);
+        return ResponseEntity.ok().body("更新成功！");
+    }
+
     /*调用维修相关微服务*/
+    // 获取全部维修信息
+    @RequestMapping(value = "/repair", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllRepairments() {
+        List<ServiceInstance> instances = discoveryClient.getInstances("repairment-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for repairment-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/";
+        ResponseEntity<List<Repair>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Repair>>() {}
+        );
+        System.out.println(response);
+        return ResponseEntity.ok().body(response.getBody());
+    }
+
+    // 添加维修信息
+    @RequestMapping(value = "/repair", method = RequestMethod.POST)
+    public ResponseEntity<?> addRepairment(@RequestBody Repair repair) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("repairment-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for repairment-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/";
+        ResponseEntity<String> response = restTemplate.postForEntity(url, repair, String.class);
+        return ResponseEntity.ok().body(response.getBody());
+    }
+
+    // 删除维修信息
+    @RequestMapping(value = "/repair/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteRepairment(@PathVariable Integer id) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("repairment-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for repairment-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/" + id;
+        restTemplate.delete(url);
+        return ResponseEntity.ok().body("删除成功！");
+    }
+
+    // 查询维修信息
+    @RequestMapping(value = "/repair/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getRepairmentById(@PathVariable int id) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("repairment-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for repairment-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/" + id;
+        ResponseEntity<Repair> response = restTemplate.getForEntity(url, Repair.class);
+        return ResponseEntity.ok().body(response.getBody());
+    }
+
+    // 修改维修信息
+    @RequestMapping(value = "/repair/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateRepairment(@RequestBody Repair repair, @PathVariable int id) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("repairment-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for repairment-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/" + id;
+        restTemplate.put(url, repair);
+        return ResponseEntity.ok().body("更新成功！");
+    }
+
     /*调用租赁相关微服务*/
+    // 获取全部租赁信息
+    @RequestMapping(value = "/lend", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllLends() {
+        List<ServiceInstance> instances = discoveryClient.getInstances("lend-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for lend-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/";
+        ResponseEntity<List<Lend>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Lend>>() {}
+        );
+        System.out.println(response);
+        return ResponseEntity.ok().body(response.getBody());
+    }
+
+    // 添加租赁信息
+    @RequestMapping(value = "/lend", method = RequestMethod.POST)
+    public ResponseEntity<?> addLend(@RequestBody Lend lend) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("lend-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for lend-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/";
+        ResponseEntity<String> response = restTemplate.postForEntity(url, lend, String.class);
+        return ResponseEntity.ok().body(response.getBody());
+    }
+
+    // 删除租赁信息
+    @RequestMapping(value = "/lend/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteLend(@PathVariable Integer id) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("lend-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for lend-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/" + id;
+        restTemplate.delete(url);
+        return ResponseEntity.ok().body("删除成功！");
+    }
+
+    // 查询租赁信息
+    @RequestMapping(value = "/lend/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getLendById(@PathVariable int id) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("lend-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for lend-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/" + id;
+        ResponseEntity<Lend> response = restTemplate.getForEntity(url, Lend.class);
+        return ResponseEntity.ok().body(response.getBody());
+    }
+
+    // 修改租赁信息
+    @RequestMapping(value = "/lend/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateLend(@RequestBody Lend lend, @PathVariable int id) {
+        List<ServiceInstance> instances = discoveryClient.getInstances("lend-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for lend-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/" + id;
+        restTemplate.put(url, lend);
+        return ResponseEntity.ok().body("更新成功！");
+    }
 }
