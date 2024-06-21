@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
+@EnableDiscoveryClient
+@MapperScan(basePackages = "com.example.bike.mapper")
 public class BikeApplication {
 
     public static void main(String[] args) {
