@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.lend.mapper.UserMapper">
+    <!--    查询所有用户-->
+    <select id="lendList" resultType="com.example.lend.bean.Lend">
+        select * from lend_record
+    </select>
+    <!--    添加用户-->
+    <insert id="save" parameterType="string">
+        INSERT INTO lend_record VALUES(null,#{user_id},#{bike_id},#{lend_time},#{return_time})
+    </insert>
+    <!--    删除用户-->
+    <delete id="delete" parameterType="int">
+        delete from lend_record where id = #{id}
+    </delete>
+    <!--    根据id查询用户-->
+    <select id="findLendById" resultType="com.example.lend.bean.Lend">
+        select * from lend_record where id = #{id}
+    </select>
+    <!--    更改用户信息-->
+    <update id="update" parameterType="lend">
+        update lend_record set user_id=#{user_id},bike_id=#{bike_id},lend_time=#{lend_time},return_time=#{return_time} where id = #{id}
+    </update>
+
+</mapper>
