@@ -20,7 +20,7 @@ public class BikeService {
 
 
     //查询所有
-    public List<Bike> userList(){
+    public List<Bike> bikeList(){
         return bikeMapper.BikeList();
     }
 
@@ -34,7 +34,7 @@ public class BikeService {
     }
 
     //根据id查找
-    public Bike findUserById(int id){
+    public Bike findBikeById(int id){
         return bikeMapper.findUserById(id);
     }
 
