@@ -19,6 +19,22 @@ public class UserController {
     //注入UserService
     private UserService userService;
 
+    //微服务:获取所有用户数据
+    @RequestMapping(method = RequestMethod.GET)
+    @Operation(summary = "获取所有用户信息")
+    public ResponseEntity<?> getAllUsers(){
+        // 获取所有用户数据
+        List<User> users = userService.userList();
+        // 检查是否有用户数据
+        if (!users.isEmpty()) {
+            // 如果存在用户数据，则返回所有用户信息
+            return ResponseEntity.ok().body(users);
+        } else {
+            // 如果没有用户数据，则返回空列表
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("没有找到任何用户！");
+        }
+    }
+
     //微服务:增加一条用户数据
     @RequestMapping(method = RequestMethod.POST)
     @Operation(summary = "添加用户信息")
