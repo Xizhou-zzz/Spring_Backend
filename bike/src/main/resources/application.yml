@@ -1,0 +1,47 @@
+server:
+  port: 8503
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/bike_share?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    initial-size: 10
+    max-active: 20
+    min-idle: 8
+
+  application:
+    name: service-provider
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+# 静态资源配置
+resources:
+  static-locations: classpath:static/
+
+# thymeleaf模板引擎配置
+thymeleaf:
+  prefix: classpath:/templates/
+  suffix: .html
+  mode: HTML5
+  encoding: UTF-8
+  content-type: text/html
+  cache: false
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.example.demo.bean
+
+logging:
+  level:
+    com:
+      example:
+        demo2:
+          mapper: debug
