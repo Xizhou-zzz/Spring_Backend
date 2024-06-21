@@ -19,7 +19,7 @@
     </select>
     <!--    更改用户信息-->
     <update id="update" parameterType="user">
-        update normal_user set username=#{username},password=#{password},age=#{age},sex=#{sex},address=#{addresss} where id = #{id}
+        update normal_user set username=#{username},password=#{password},age=#{age},sex=#{sex},address=#{address} where id = #{id}
     </update>
 
 </mapper>

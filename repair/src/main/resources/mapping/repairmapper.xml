@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.repair.mapper.RepairMapper">
     <!--    查询所有用户-->
-    <select id="userList" resultType="com.example.repair.bean.Repair">
+    <select id="repairList" resultType="com.example.repair.bean.Repair">
         select * from repairment
     </select>
     <!--    添加用户-->
