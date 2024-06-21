@@ -4,6 +4,8 @@ import com.example.consumer.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +65,26 @@ public class ConsumerController {
         }
     }
 
+    /*调用用户相关微服务*/
+    // 获取全部用户
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllUsers() {
+        List<ServiceInstance> instances = discoveryClient.getInstances("user-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for student-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/";
+        ResponseEntity<List<User>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<User>>() {}
+        );
+        System.out.println(response);
+        return ResponseEntity.ok().body(response.getBody());
+    }
+
     // 添加用户
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@RequestBody User user) {
@@ -114,4 +136,7 @@ public class ConsumerController {
         restTemplate.put(url, user);
         return ResponseEntity.ok().body("更新成功！");
     }
+    /*调用单车相关微服务*/
+    /*调用维修相关微服务*/
+    /*调用租赁相关微服务*/
 }

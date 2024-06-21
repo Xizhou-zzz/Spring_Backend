@@ -1,10 +1,12 @@
 package com.example.consumer.bean;
 
 public class User {
-    /* 管理员用户，用来验证用户的用户名和密码*/
     private int id;
     private String username;
     private String password;
+    private int age;
+    private String sex;
+    private String address;
 
     public int getId() {
         return id;
@@ -28,5 +30,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
