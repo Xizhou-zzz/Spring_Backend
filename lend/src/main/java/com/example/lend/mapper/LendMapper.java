@@ -7,14 +7,14 @@ import java.util.List;
 
 @Repository
 public interface LendMapper {
-    //查询所有用户
+    //查询所有lend
     List<Lend> lendList();
-    //增加保存用户
+    //增加保存lend
     void save(Lend lend);
-    //根据id删除用户
+    //根据id删除lend
     int delete(Integer id);
-    //根据id查找用户
+    //根据id查找lend
     Lend findLendById(int id);
-    //更改用户信息
+    //更改lend信息
     int update(Lend lend);
 }
