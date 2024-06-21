@@ -1,11 +1,4 @@
-server:
-  port: 8503
-
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-
   datasource:
     url: jdbc:mysql://localhost:3306/bike_share?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,9 +7,8 @@ spring:
     initial-size: 10
     max-active: 20
     min-idle: 8
-
   application:
-    name: service-provider
+    name: bike-service #此springboot模块提供单车增删改查微服务
   cloud:
     nacos:
       discovery:
@@ -37,11 +29,14 @@ thymeleaf:
 
 mybatis:
   mapper-locations: classpath:mapping/*.xml
-  type-aliases-package: com.example.demo.bean
+  type-aliases-package: com.example.bike.bean
 
 logging:
   level:
     com:
       example:
-        demo2:
+        bike:
           mapper: debug
+
+server:
+  port: 8503 # 单车微服务注册的端口
