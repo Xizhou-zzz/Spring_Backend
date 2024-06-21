@@ -18,6 +18,22 @@ public class BikeController {
     //注入BikeService
     private BikeService bikeService;
 
+    //微服务:获取所有维修数据
+    @RequestMapping(method = RequestMethod.GET)
+    @Operation(summary = "获取所有用户信息")
+    public ResponseEntity<?> getAllBikes(){
+        // 获取所有用户数据
+        List<Bike> bikes = bikeService.bikeList();
+        // 检查是否有用户数据
+        if (!bikes.isEmpty()) {
+            // 如果存在用户数据，则返回所有用户信息
+            return ResponseEntity.ok().body(bikes);
+        } else {
+            // 如果没有用户数据，则返回空列表
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("没有找到任何维修数据！");
+        }
+    }
+
     //微服务:增加一条自行车数据
     @RequestMapping(method = RequestMethod.POST)
     @Operation(summary = "添加自行车信息")
