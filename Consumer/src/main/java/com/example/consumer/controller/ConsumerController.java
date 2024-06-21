@@ -66,7 +66,7 @@ public class ConsumerController {
     // 添加用户
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@RequestBody User user) {
-        List<ServiceInstance> instances = discoveryClient.getInstances("student-service");
+        List<ServiceInstance> instances = discoveryClient.getInstances("user-service");
         if (instances.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for student-service");
         }
@@ -79,7 +79,7 @@ public class ConsumerController {
     // 删除用户
     @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
-        List<ServiceInstance> instances = discoveryClient.getInstances("student-service");
+        List<ServiceInstance> instances = discoveryClient.getInstances("user-service");
         if (instances.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for student-service");
         }
@@ -92,7 +92,7 @@ public class ConsumerController {
     // 查询用户
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getUserById(@PathVariable int id) {
-        List<ServiceInstance> instances = discoveryClient.getInstances("student-service");
+        List<ServiceInstance> instances = discoveryClient.getInstances("user-service");
         if (instances.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for student-service");
         }
@@ -105,7 +105,7 @@ public class ConsumerController {
     // 修改用户
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable int id) {
-        List<ServiceInstance> instances = discoveryClient.getInstances("student-service");
+        List<ServiceInstance> instances = discoveryClient.getInstances("user-service");
         if (instances.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for student-service");
         }
