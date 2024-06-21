@@ -24,3 +24,41 @@ spring:
             - Path=/login-service/**
           filters:
             - StripPrefix=1
+
+        - id: service-consumer-route
+          uri: http://localhost:8501
+          predicates:
+            - Path=/service-consumer/**
+          filters:
+            - StripPrefix=1
+
+        - id: bike-service-route
+          uri: http://localhost:8503
+          predicates:
+            - Path=/bike-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: user-service-route
+          uri: http://localhost:8504
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: lend-service-route
+          uri: http://localhost:8505
+          predicates:
+            - Path=/lend-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: repair-service-route
+          uri: http://localhost:8506
+          predicates:
+            - Path=/repair-service/**
+          filters:
+            - StripPrefix=1
+
+
+
