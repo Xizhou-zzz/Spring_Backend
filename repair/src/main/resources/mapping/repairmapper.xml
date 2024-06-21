@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.repair.mapper.RepairMapper">
+    <!--    查询所有用户-->
+    <select id="userList" resultType="com.example.repair.bean.Repair">
+        select * from repairment
+    </select>
+    <!--    添加用户-->
+    <insert id="save" parameterType="string">
+        INSERT INTO repairment VALUES(null,#{bike_id},#{time},#{reason})
+    </insert>
+    <!--    删除用户-->
+    <delete id="delete" parameterType="int">
+        delete from repairment where id = #{id}
+    </delete>
+    <!--    根据id查询用户-->
+    <select id="findRepairById" resultType="com.example.repair.bean.Repair">
+        select * from repairment where id = #{id}
+    </select>
+    <!--    更改用户信息-->
+    <update id="update" parameterType="repair">
+        update repairment set bike_id=#{bike_id},time=#{time},reason=#{reason} where id = #{id}
+    </update>
+
+</mapper>
