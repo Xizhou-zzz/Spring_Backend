@@ -27,7 +27,7 @@ public class ConsumerController {
         this.discoveryClient = discoveryClient;
     }
 
-    //调用用户登录微服务
+    // 调用用户登录微服务
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody User user) {
         // 获取登录服务的实例列表
@@ -50,6 +50,20 @@ public class ConsumerController {
             // 登录失败
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("登录失败，用户名或密码错误！");
         }
+    }
+    // 调用修改管理员密码微服务
+    @RequestMapping(value = "/login/change_password/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> changeAdminPassword(@RequestBody User user, @PathVariable Integer id) {
+        System.out.println("111");
+        List<ServiceInstance> instances = discoveryClient.getInstances("login-service");
+        if (instances.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No instances available for student-service");
+        }
+        String serviceUrl = instances.get(0).getUri().toString();
+        String url = serviceUrl + "/login/change_password/"+id;
+        restTemplate.put(url, user);
+        System.out.println("222");
+        return ResponseEntity.ok().body("更新管理员成功！");
     }
 
     /*调用用户相关微服务*/
