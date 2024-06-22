@@ -336,7 +336,9 @@ public class ConsumerController {
         }
         String serviceUrl = instances.get(0).getUri().toString();
         String url = serviceUrl + "/" + id;
+        System.out.println(1);
         restTemplate.put(url, lend);
+        System.out.println(2);
         return ResponseEntity.ok().body("更新成功！");
     }
 }

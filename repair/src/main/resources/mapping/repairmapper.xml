@@ -7,7 +7,7 @@
     </select>
     <!--    添加用户-->
     <insert id="save" parameterType="string">
-        INSERT INTO repairment VALUES(null,#{bike_id},#{time},#{reason})
+        INSERT INTO repairment VALUES(null,#{bikeId},#{time},#{reason})
     </insert>
     <!--    删除用户-->
     <delete id="delete" parameterType="int">
@@ -19,7 +19,7 @@
     </select>
     <!--    更改用户信息-->
     <update id="update" parameterType="repair">
-        update repairment set bike_id=#{bike_id},time=#{time},reason=#{reason} where id = #{id}
+        update repairment set bike_id=#{bikeId},time=#{time},reason=#{reason} where id = #{id}
     </update>
 
 </mapper>

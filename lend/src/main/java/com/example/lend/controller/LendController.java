@@ -94,6 +94,7 @@ public class LendController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @Operation(summary = "更新用户信息")
     public ResponseEntity<?> updateLend(@RequestBody Lend lend, @PathVariable int id){
+        System.out.println("进入了lend微服务的update");
         // 检查数据库中是否存在指定的lend
         Optional<Lend> lendOptional = Optional.ofNullable(lendService.findLendById(id));
         if (lendOptional.isPresent()) {
@@ -112,6 +113,7 @@ public class LendController {
 
             // 更新信息内容
             lendService.update(updatedLend);
+            System.out.println("成功更新信息");
             return ResponseEntity.ok().body("{\"message\": \"更新成功\"}");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("更改失败，不存在该用户！");
