@@ -19,7 +19,7 @@
     </select>
     <!--    更改用户信息-->
     <update id="update" parameterType="repair">
-        update repairment set bike_id=#{bikeId},time=#{time},reason=#{reason} where id = #{id}
+        update repairment set bike_id=#{bike_id},time=#{time},reason=#{reason} where id = #{id}
     </update>
 
 </mapper>

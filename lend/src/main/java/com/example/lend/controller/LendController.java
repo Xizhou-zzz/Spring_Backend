@@ -98,19 +98,12 @@ public class LendController {
         // 检查数据库中是否存在指定的lend
         Optional<Lend> lendOptional = Optional.ofNullable(lendService.findLendById(id));
         if (lendOptional.isPresent()) {
-            int user_id = lend.getUser_id();
-            int bike_id = lend.getBike_id();
-
-            LocalDateTime lend_time = lend.getLend_time();
-            LocalDateTime return_time = lend.getReturn_time();
-
-
-            Lend updatedLend = new Lend();
-            updatedLend.setUser_id(user_id);
-            updatedLend.setBike_id(bike_id);
-            updatedLend.setLend_time(lend_time);
-            updatedLend.setReturn_time(return_time);
-
+            Lend updatedLend = lendOptional.get();
+            // 更新信息内容
+            updatedLend.setUser_id(lend.getUser_id());
+            updatedLend.setBike_id(lend.getBike_id());
+            updatedLend.setLend_time(lend.getLend_time());
+            updatedLend.setReturn_time(lend.getReturn_time());
             // 更新信息内容
             lendService.update(updatedLend);
             System.out.println("成功更新信息");

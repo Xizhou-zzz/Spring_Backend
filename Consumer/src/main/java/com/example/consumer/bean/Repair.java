@@ -1,10 +1,11 @@
 package com.example.consumer.bean;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Repair {
     private int id;
-    private int bikeId;
+    private int bike_id;
     private LocalDateTime time;
     private String reason;
 
@@ -14,7 +15,7 @@ public class Repair {
     }
 
     public int getBikeId() {
-        return bikeId;
+        return bike_id;
     }
 
     public LocalDateTime getTime() {
@@ -30,14 +31,13 @@ public class Repair {
         this.id = id;
     }
 
-    public void setBikeId(int bikeId) {
-        this.bikeId = bikeId;
+    public void setBikeId(int bike_id) {
+        this.bike_id = bike_id;
     }
 
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
-
     public void setReason(String reason) {
         this.reason = reason;
     }

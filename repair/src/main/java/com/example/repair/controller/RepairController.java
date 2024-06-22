@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,14 +84,11 @@ public class RepairController {
         // 检查数据库中是否存在指定的信息
         Optional<Repair> repairOptional = Optional.ofNullable(repairService.findRepairById(id));
         if (repairOptional.isPresent()) {
-            int bikeId = repair.getBikeId();
-            LocalDateTime time = repair.getTime();
-            String reason = repair.getReason();
-            // 构建更新后的User对象
-            Repair updatedRepair = new Repair();
-            updatedRepair.setBikeId(bikeId);
-            updatedRepair.setTime(time);
-            updatedRepair.setReason(reason);
+            Repair updatedRepair = repairOptional.get();
+            // 更新信息内容
+            updatedRepair.setBikeId(repair.getBikeId());
+            updatedRepair.setTime(repair.getTime());
+            updatedRepair.setReason(repair.getReason());
             // 更新信息内容
             repairService.update(updatedRepair);
             return ResponseEntity.ok().body("{\"message\": \"更新成功\"}");
